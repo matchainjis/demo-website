@@ -9,6 +9,7 @@ Step 3 would be to install the latest version of axios using the command (if nee
 
 Step 4 would be to create the file config-overrides.js in the root of your front-end dapp and append the following content to it (if needed):
 
+```javascript
 const webpack = require('webpack');
 
 module.exports = function override(config) {
@@ -46,6 +47,7 @@ module.exports = function override(config) {
 
     return config;
 };
+```
 
 Step 5 would be to install buffer using the command (if needed): yarn add buffer
 
