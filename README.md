@@ -7,7 +7,7 @@ Step 2 would be to install the latest version of webpack using the command (if n
 
 Step 3 would be to install the latest version of axios using the command (if needed): yarn add axios@latest
 
-Step 4 would be to create the file config-overrides.js in the root of your front-end dapp and append the following content to it (if needed):
+Step 4 would be to create the file config-overrides.js in the root of your front-end Dapp and append the following content to it (if needed):
 
 ```javascript
 const webpack = require('webpack');
@@ -57,7 +57,7 @@ Step 7 would be to import buffer in your App.js like so: import { Buffer } from 
 
 Step 8 would be to set buffer compatibility in your App.js like so: window.Buffer = Buffer;
 
-Step 9 would be to start your dapp
+Step 9 would be to start your Dapp
 
-Step 10 would be to play around with your dapp
+Step 10 would be to play around with your Dapp
 
