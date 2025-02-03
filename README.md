@@ -1,63 +1,87 @@
 # demo-website
-Demo website chat Dapp showcasing how to integrate MatchID into your web Dapp
 
-Step 1 would be to make sure you are using a Node version above or equal to version 20
+A demo chat Dapp showing how to integrate MatchID into your web application.
 
-Step 2 would be to install the latest version of webpack using the command (if needed): yarn add webpack@latest webpack-dev-server@latest
+## Requirements
 
-Step 3 would be to install the latest version of axios using the command (if needed): yarn add axios@latest
+- Node.js v20 or higher
 
-Step 4 would be to create the file config-overrides.js in the root of your front-end Dapp and append the following content to it (if needed):
+## Setup
 
-```javascript
-const webpack = require('webpack');
+1. **Install Webpack (if needed):**
 
-module.exports = function override(config) {
-    // Disable polyfills by setting the fallback to `false`
-    const fallback = config.resolve.fallback || {};
-    Object.assign(fallback, {
-        "crypto": false,
-        "stream": false,
-        "http": false,
-        "https": false,
-        "zlib": false,
-        "url": false,
-        "process": false,
-        "buffer": false
-        // "buffer": require.resolve("buffer"), // Ensure Buffer is properly polyfilled
-    });
+   ```bash
+   yarn add webpack@latest webpack-dev-server@latest
+   ```
 
-    config.resolve.fallback = fallback;
+2. **Install Axios (if needed):**
 
-    // Remove any existing alias for process if you want to completely disable
-    if (config.resolve.alias) {
-        delete config.resolve.alias['process'];  // Remove alias for process
-    }
+   ```bash
+   yarn add axios@latest
+   ```
 
-    // Remove the ProvidePlugin for process and Buffer, if you want to avoid polyfills
-    config.plugins = (config.plugins || []).filter(
-        plugin => !(plugin instanceof webpack.ProvidePlugin)
-    );
-    // Add ProvidePlugin for Buffer
-    // config.plugins = (config.plugins || []).concat([
-    //     new webpack.ProvidePlugin({
-    //         Buffer: ['buffer', 'Buffer'],  // Explicitly provide Buffer from buffer package
-    //     }),
-    // ]);
+3. **Create `config-overrides.js`:**  
+   In the root of your front-end Dapp, create a file named `config-overrides.js` with the following content:
 
-    return config;
-};
-```
+   ```javascript
+   const webpack = require('webpack');
 
-Step 5 would be to install buffer using the command (if needed): yarn add buffer
+   module.exports = function override(config) {
+       // Disable polyfills by setting the fallback to `false`
+       const fallback = config.resolve.fallback || {};
+       Object.assign(fallback, {
+           "crypto": false,
+           "stream": false,
+           "http": false,
+           "https": false,
+           "zlib": false,
+           "url": false,
+           "process": false,
+           "buffer": false
+       });
 
-Step 6 would be to install MatchID SDK using the command: yarn add @matchain/matchid-sdk-react@latest
+       config.resolve.fallback = fallback;
 
-Step 7 would be to import buffer in your App.js like so: import { Buffer } from 'buffer';
+       // Remove any alias for process if you want to disable it completely
+       if (config.resolve.alias) {
+           delete config.resolve.alias['process'];
+       }
 
-Step 8 would be to set buffer compatibility in your App.js like so: window.Buffer = Buffer;
+       // Remove ProvidePlugin for process and Buffer to avoid polyfills
+       config.plugins = (config.plugins || []).filter(
+           plugin => !(plugin instanceof webpack.ProvidePlugin)
+       );
 
-Step 9 would be to start your Dapp
+       return config;
+   };
+   ```
 
-Step 10 would be to play around with your Dapp
+4. **Install Buffer (if needed):**
 
+   ```bash
+   yarn add buffer
+   ```
+
+5. **Install the MatchID SDK:**
+
+   ```bash
+   yarn add @matchain/matchid-sdk-react@latest
+   ```
+
+6. **Update Your Application:**  
+   In your `App.js`:
+   - Import Buffer:
+
+     ```javascript
+     import { Buffer } from 'buffer';
+     ```
+
+   - Set Buffer for compatibility:
+
+     ```javascript
+     window.Buffer = Buffer;
+     ```
+
+7. **Start your Dapp.**
+
+8. **Explore and enjoy your Dapp!**
