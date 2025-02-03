@@ -1,4 +1,4 @@
-# demo-website
+# matchid-sandbox-demo
 
 A demo chat Dapp showing how to integrate MatchID into your web application.
 
