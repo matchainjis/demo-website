@@ -5,46 +5,68 @@ A demo chat Dapp showing how to integrate MatchID into your web application.
 ## Requirements
 
 - Node.js v20 or higher
+- Docker (for MongoDB)
+- Git
 
 ## Setup
 
-1. **Install Front-End Dependencies**
+1. **Clone the Repository**
 
    ```bash
-   yarn install inside the front-end folder
+   git clone git@github.com:matchainjis/demo-website.git
+   cd demo-website
    ```
 
-2. **Set your AppID**
+2. **Setup Front-End**
 
    ```bash
-   Fill in your AppID in the .env file inside the front-end folder
+   cd front-end
+   yarn install
    ```
 
-3. **Start your Front-End**  
+3. **Configure Front-End Environment**
+
+   Create a `.env` file in the `front-end` directory and add your MatchID AppID:
+   ```bash
+   REACT_APP_MATCHID_APP_ID=your_app_id_here
+   ```
+
+4. **Start Front-End**
    
    ```bash
    npm run start
    ```
 
-4. **Set your mongodb for saving chats**
+5. **Start MongoDB using Docker**
 
+   In a new terminal, run:
    ```bash
-   Fill in your mongodb in the .env file inside the back-end folder
+   docker run -d -p 27017:27017 --name matchid-mongo mongo:latest
    ```
 
-5. **Install Back-End Dependencies**  
-   
+6. **Setup Back-End**
+
+   In a new terminal:
    ```bash
-   yarn install inside the back-end folder
+   cd back-end
+   yarn install
+   npm install
    ```
 
-6. **Start your Back-End**  
+7. **Configure Back-End Environment**
+
+   Create a `.env` file in the `back-end` directory and add:
+   ```bash
+   MONGO_URL=mongodb://localhost:27017/matchid-demo
+   ```
+
+8. **Start Back-End**
    
    ```bash
    npm run start
    ```
 
-7. **Explore and enjoy your Dapp!**
+9. **Explore and enjoy your Dapp!**
 
 ## Demo Screenshots
 
