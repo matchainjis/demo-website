@@ -8,8 +8,15 @@ import axios from "axios";
 import { setAvatarRoute } from "../utils/APIRoutes";
 import { Buffer } from "buffer";
 import { Hooks, Components } from "@matchain/matchid-sdk-react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateAvatarDetails } from "../redux/authReducer/action";
 
 export default function SetAvatar() {
+  const dispatch = useDispatch();
+  const sign_in_success = useSelector(
+    (state) => state.authReducer.sign_in_success,
+  );
+  const sign_in_user = useSelector((state) => state.authReducer.sign_in_user);
   const api = "https://api.multiavatar.com/45678945";
   const navigate = useNavigate();
   const { useUserInfo, useWallet, useMatchEvents } = Hooks;
@@ -66,18 +73,26 @@ export default function SetAvatar() {
         localStorage.getItem("chat-app-user-mongo"),
       );
       // console.log("----");
-      console.log(userInfo);
+      // console.log(userInfo);
       // console.log(isLogin);
       // console.log(username);
-      console.log(userInfoMongo);
+      // console.log(userInfoMongo);
+      // console.log(sign_in_user);
+      // const { data } = await axios.post(
+      //   `${setAvatarRoute}/${userInfo.address}_${userInfo.username}_${userInfoMongo.email}`,
+      //   {
+      //     avatarImage: avatars[selectedAvatar],
+      //   },
+      // );
       const { data } = await axios.post(
-        `${setAvatarRoute}/${userInfo.address}_${userInfo.username}_${userInfoMongo.email}`,
+        `${setAvatarRoute}/${sign_in_user.address}_${sign_in_user.username}_${sign_in_user.email}`,
         {
           avatarImage: avatars[selectedAvatar],
         },
       );
 
       if (data.isSet) {
+        dispatch(updateAvatarDetails(data.image)); // ✅ Update Redux
         // ✅ Update `chat-app-user` in local storage
         const updatedChatAppUser = {
           ...userInfo,
@@ -114,8 +129,11 @@ export default function SetAvatar() {
     const fetchAvatars = async () => {
       const data = [];
       for (let i = 0; i < 4; i++) {
+        // const image = await axios.get(
+        //   `${api}/${Math.round(Math.random() * 1000)}`,
+        // );
         const image = await axios.get(
-          `${api}/${Math.round(Math.random() * 1000)}`,
+          `http://localhost:6050/avatar/${Math.round(Math.random() * 1000)}`,
         );
         const buffer = new Buffer(image.data);
         data.push(buffer.toString("base64"));

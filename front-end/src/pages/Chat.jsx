@@ -8,6 +8,7 @@ import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
 import { io } from "socket.io-client";
 import { Hooks } from "@matchain/matchid-sdk-react";
+import { useSelector } from "react-redux";
 
 function Chat() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function Chat() {
   const [currentChat, setCurrentChat] = useState(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const sign_in_user = useSelector((state) => state.authReducer.sign_in_user);
   const { username, address } = location.state || {}; // Fallback if state is undefined
   const { useUserInfo, useWallet, useMatchEvents } = Hooks;
 
@@ -83,12 +85,23 @@ function Chat() {
   useEffect(() => {
     if (currentUser) {
       socket.current = io(host);
-      socket.current.emit(
-        "add-user",
-        `${currentUser.address}${currentUser.username}`,
-      );
+      // socket.current.emit(
+      //   "add-user",
+      //   `${currentUser.address}${currentUser.username}`,
+      // );
+      socket.current.emit("add-user", `${currentUser.address}`);
     }
   }, [currentUser]);
+  // useEffect(() => {
+  //   if (sign_in_user) {
+  //     console.log(sign_in_user);
+  //     socket.current = io(host);
+  //     socket.current.emit(
+  //       "add-user",
+  //       `${sign_in_user.address}${sign_in_user.username}`,
+  //     );
+  //   }
+  // }, [sign_in_user]);
 
   // Fetch contacts for the current user if the avatar is set
   useEffect(() => {
@@ -110,6 +123,26 @@ function Chat() {
     };
     fetchContacts();
   }, [currentUser, navigate]);
+  // useEffect(() => {
+  //   const fetchContacts = async () => {
+  //     if (sign_in_user) {
+  //       console.log(sign_in_user);
+  //       if (sign_in_user.isAvatarImageSet) {
+  //         try {
+  //           const { data } = await axios.get(
+  //             `${allUserRoute}/${sign_in_user.address}`,
+  //           );
+  //           setContacts(data);
+  //         } catch (error) {
+  //           console.error("Failed to fetch contacts:", error);
+  //         }
+  //       } else {
+  //         navigate("/setAvatar");
+  //       }
+  //     }
+  //   };
+  //   fetchContacts();
+  // }, [sign_in_user, navigate]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
@@ -120,14 +153,17 @@ function Chat() {
         <Contacts
           contacts={contacts}
           currentUser={currentUser}
+          // currentUser={sign_in_user}
           changeChat={handleChatChange}
         />
         {isLoaded && currentChat === undefined ? (
-          <Welcome currentUser={currentUser} />
+          // <Welcome currentUser={currentUser} />
+          <Welcome currentUser={sign_in_user} />
         ) : (
           <ChatContainer
             currentChat={currentChat}
             currentUser={currentUser}
+            // currentUser={sign_in_user}
             socket={socket}
           />
         )}

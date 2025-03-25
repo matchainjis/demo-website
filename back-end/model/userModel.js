@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,  // ✅ Ensures one user per address
+        default: function () {
+            return this.address;
+        }
     },
     username: {
         type: String,

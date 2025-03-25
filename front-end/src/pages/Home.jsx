@@ -10,7 +10,7 @@ function Home() {
       <Container>
         <Logo src={Robot} alt="Robot" />
         <Title>Welcome to MatchID Chat Box</Title>
-        <LinkButton to="/login">Sign Up / Sign In</LinkButton>
+        <LinkButton to="/login">Login With MatchID</LinkButton>
       </Container>
     </Background>
   );

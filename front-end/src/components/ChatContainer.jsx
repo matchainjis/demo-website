@@ -7,6 +7,8 @@ import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ChatContainer({ currentChat, currentUser, socket }) {
+  // console.log(currentChat);
+  // console.log(currentUser);
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
@@ -16,8 +18,10 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
       if (currentUser && currentChat) {
         const response = await axios.post(getAllMessagesRoute, {
           from: currentUser.address,
-          to: currentChat.address,
+          // to: currentChat.address,
+          to: currentChat._id,
         });
+        console.log("Fetched messages:", response.data);
         setMessages(response.data);
       }
     };
@@ -25,13 +29,16 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
   }, [currentUser, currentChat]);
 
   const handleSendMsg = async (msg) => {
+    // console.log(msg, sendMessageRoute, currentUser, currentChat);
     await axios.post(sendMessageRoute, {
       from: currentUser.address,
-      to: currentChat.address,
+      // to: currentChat.address,
+      to: currentChat._id,
       message: msg,
     });
     socket.current.emit("send-msg", {
-      to: currentChat.address,
+      // to: currentChat.address,
+      to: currentChat._id,
       from: currentUser.address,
       message: msg,
     });

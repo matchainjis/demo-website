@@ -6,10 +6,8 @@ import SetAvatar from './pages/SetAvatar';
 import Home from './pages/Home';
 import { MatchProvider } from "@matchain/matchid-sdk-react";
 import "@matchain/matchid-sdk-react/index.css";
-import { Buffer } from 'buffer';
-
-// Optional: Set Buffer globally for compatibility
-window.Buffer = Buffer;
+import { useDispatch } from "react-redux";
+import { signInAccount } from "./redux/authReducer/action";
 
 const getState = () => {
   if (window.localStorage.getItem("match-local")) {
@@ -20,6 +18,7 @@ const getState = () => {
 };
 
 export default function App() {
+  const dispatch = useDispatch();
   const state = getState();
   const [appid, setAppid] = useState(state?.appid || process.env.REACT_APP_MATCH_ID_APP_ID);
   const [locale, setLocale] = useState(
@@ -36,13 +35,19 @@ export default function App() {
     window.localStorage.setItem("locale", locale);
   }, [locale]);
 
+  useEffect(() => {
+    console.log(process.env.REACT_APP_MATCH_ID_APP_ID);
+  }, []);
+
   return (
     <MatchProvider appid={state?.appid || process.env.REACT_APP_MATCH_ID_APP_ID}
+      wallet={{ type: "UserPasscode" }}
       // endpoints={endpoints}
       locale={locale} events={{
         onLogin: (data) => {
           // console.log("MatchProvider: User Logged In", data);
           localStorage.setItem("chat-app-user-data", JSON.stringify(data));
+          dispatch(signInAccount(data));
         },
         onLogout: () => {
           console.log("MatchProvider: User Logged Out");

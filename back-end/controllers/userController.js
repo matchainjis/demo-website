@@ -69,6 +69,10 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.setAvatar = async (req, res, next) => {
    try {
+      console.log("Incoming setAvatar request...");
+      console.log("Params ID:", req.params.id);
+      console.log("Body:", req.body);
+
       const { avatarImage } = req.body;
 
       if (!avatarImage) {
@@ -77,6 +81,10 @@ module.exports.setAvatar = async (req, res, next) => {
 
       const { id } = req.params; // id = "address_username_email"
       const [address, username, email] = id.split("_");
+
+      console.log("Parsed address:", address);
+      console.log("Parsed username:", username);
+      console.log("Parsed email:", email);
 
       let user = await User.findOne({ address, username });
 
@@ -93,6 +101,7 @@ module.exports.setAvatar = async (req, res, next) => {
                address,
                username,
                email,
+               theWalletAddress: address, // ✅ Fix added
                isAvatarImageSet: true,
                avatarImage: req.body.avatarImage, // Set the avatar immediately
             });
