@@ -26,7 +26,7 @@ A demo chat Dapp showing how to integrate MatchID into your web application.
 
 3. **Configure Front-End Environment**
 
-   Create a `.env` file in the `front-end` directory and add your MatchID AppID:
+   Modify the `.env` file in the `front-end` directory and add your MatchID AppID:
    ```bash
    REACT_APP_MATCHID_APP_ID=your_app_id_here
    ```
@@ -50,12 +50,11 @@ A demo chat Dapp showing how to integrate MatchID into your web application.
    ```bash
    cd back-end
    yarn install
-   npm install
    ```
 
 7. **Configure Back-End Environment**
 
-   Create a `.env` file in the `back-end` directory and add:
+   Modify the `.env` file in the `back-end` directory and add:
    ```bash
    MONGO_URL=mongodb://localhost:27017/matchid-demo
    ```
