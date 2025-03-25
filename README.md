@@ -2,14 +2,6 @@
 
 A demo chat Dapp showing how to integrate MatchID into your web application. This application demonstrates user authentication, real-time chat functionality, and avatar customization using MatchID's authentication services.
 
-## Features
-
-- Secure authentication with MatchID
-- Real-time chat functionality
-- User avatar customization
-- Persistent chat history
-- Responsive design
-
 ## Requirements
 
 - Node.js v20 or higher
@@ -35,20 +27,23 @@ A demo chat Dapp showing how to integrate MatchID into your web application. Thi
 3. **Configure Front-End Environment**
 
    Create or modify the `.env` file in the `front-end` directory and add your MatchID AppID:
+
    ```bash
    REACT_APP_MATCHID_APP_ID=your_app_id_here
    ```
 
 4. **Start Front-End**
-   
+
    ```bash
    npm run start
    ```
+
    The front-end will be available at `http://localhost:3000`
 
 5. **Start MongoDB using Docker**
 
    In a new terminal, run:
+
    ```bash
    docker run -d -p 27017:27017 --name matchid-mongo mongo:latest
    ```
@@ -56,6 +51,7 @@ A demo chat Dapp showing how to integrate MatchID into your web application. Thi
 6. **Setup Back-End**
 
    In a new terminal:
+
    ```bash
    cd back-end
    yarn install
@@ -64,15 +60,17 @@ A demo chat Dapp showing how to integrate MatchID into your web application. Thi
 7. **Configure Back-End Environment**
 
    Create or modify the `.env` file in the `back-end` directory and add:
+
    ```bash
    MONGO_URL=mongodb://localhost:27017/matchid-demo
    ```
 
 8. **Start Back-End**
-   
+
    ```bash
    npm run start
    ```
+
    The back-end will be available at `http://localhost:8000`
 
 9. **Explore and enjoy your Dapp!**
